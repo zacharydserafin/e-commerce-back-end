@@ -32,6 +32,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Must use an id of a product that already exists. Use the GET route above to view options.
 router.get('/:id', async (req, res) => {
   try {
     const productData = await Product.findByPk(req.params.id, {
@@ -61,15 +62,16 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', (req, res) => {
-  /* req.body should look like this...
+/* req.body should look like this...
     {
       product_name: "Basketball",
       price: 200.00,
       stock: 3,
-      tagIds: [1, 2, 3, 4]
+      tagIds: [1, 2, 3, 4],
+      category_id: 2 (<-- optional)
     }
-  */
+*/
+router.post('/', (req, res) => {
   Product.create(req.body)
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
@@ -92,6 +94,16 @@ router.post('/', (req, res) => {
     });
 });
 
+// Must use an id of a product that already exists. Use the GET route above to view options.
+/* req.body should look like this...
+    {
+      product_name: "Basketball",
+      price: 200.00,
+      stock: 3,
+      tagIds: [1, 2, 3, 4],
+      category_id: 2 (<-- optional)
+    }
+*/
 router.put('/:id', (req, res) => {
   Product.update(req.body, {
     where: {
@@ -132,6 +144,7 @@ router.put('/:id', (req, res) => {
     });
 });
 
+// Must use an id of a product that already exists. Use the GET route above to view options.
 router.delete('/:id', async (req, res) => {
   try {
     await ProductTag.destroy({
