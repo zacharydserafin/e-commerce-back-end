@@ -22,6 +22,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Must use an id of a category that already exists. Use the GET route above to view options.
 router.get('/:id', async (req, res) => {
   try {
     const categoryData = await Category.findByPk(req.params.id, {
@@ -41,6 +42,11 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+/* req.body should look like this...
+    {
+      category_name: "Accessories"
+    }
+*/
 router.post('/', async (req, res) => {
   try { 
     const newCategory = await Category.create(req.body);
@@ -55,6 +61,12 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Must use an id of a category that already exists. Use the GET route above to view options.
+/* req.body should look like this...
+    {
+      category_name: "Accessories"
+    }
+*/
 router.put('/:id', async (req, res) => {
   try { 
     const newCategory = await Category.update(req.body, {
@@ -73,6 +85,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// Must use an id of a category that already exists. Use the GET route above to view options.
 router.delete('/:id', async (req, res) => {
   try {
     await Product.update({ category_id: null }, {

@@ -26,6 +26,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Must use an id of a tag that already exists. Use the GET route above to view options.
 router.get('/:id', async (req, res) => {
   try {
     const tagData = await Tag.findByPk(req.params.id, {
@@ -49,6 +50,11 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+/* req.body should look like this...
+    {
+      tag_name: "black"
+    }
+*/
 router.post('/', async (req, res) => {
   try { 
     const newTag = await Tag.create(req.body);
@@ -63,6 +69,12 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Must use an id of a tag that already exists. Use the GET route above to view options.
+/* req.body should look like this...
+    {
+      tag_name: "black"
+    }
+*/
 router.put('/:id', async (req, res) => {
   try { 
     const newTag = await Tag.update(req.body, {
@@ -81,6 +93,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// Must use an id of a tag that already exists. Use the GET route above to view options.
 router.delete('/:id', async (req, res) => {
   try {
     await ProductTag.destroy({
